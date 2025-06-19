@@ -19,8 +19,10 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'photo',
         'name',
         'email',
+        'phone',
         'password',
     ];
 
@@ -46,4 +48,17 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the user's photo URL.
+     *
+     * @return string
+     */
+    public function getPhotoAttribute()
+    {
+        return isset($this->attributes['photo']) && $this->attributes['photo']
+            ? asset('storage/' . $this->attributes['photo'])
+            : "https://ui-avatars.com/api/?background=15365F&color=C3A356&size=128&name=" . urlencode($this->name);
+    }
 }
+

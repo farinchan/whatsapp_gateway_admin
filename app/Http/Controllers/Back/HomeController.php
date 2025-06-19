@@ -14,7 +14,11 @@ class HomeController extends Controller
              'breadcrumbs' => [
                 [
                     'name' => 'Home',
-                    'link' => route('back.home')
+                    'link' => route('back.home.index')
+                ],
+                [
+                    'name' => 'sd',
+                    'link' => route('back.home.index')
                 ],
             ],
         ];

@@ -2,83 +2,206 @@
 @section('content')
     <!--begin::Container-->
     <div id="kt_content_container" class=" container-xxl ">
-        <!--begin::Row-->
-        <div class="row g-5 gx-xl-10 mb-5 mb-xl-10">
-            <!--begin::Col-->
-            <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
-                @include('back/partials/widgets/cards/_widget-20')
-                @include('back/partials/widgets/cards/_widget-7')
+        <div class="card card-flush mb-5">
+
+            <div class="card-header mt-6">
+                <h2 class="mb-5">
+                    Whatsapp API Setting
+                </h2>
             </div>
-            <!--end::Col-->
-            <!--begin::Col-->
-            <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-md-5 mb-xl-10">
-                @include('back/partials/widgets/cards/_widget-17')
-                @include('back/partials/widgets/lists/_widget-26')
+
+            <div class="card-body pt-0">
+
+
             </div>
-            <!--end::Col-->
-            <!--begin::Col-->
-            <div class="col-xxl-6">
-                @include('back/partials/widgets/engage/_widget-10')
-            </div>
-            <!--end::Col-->
         </div>
-        <!--end::Row-->
-        <!--begin::Row-->
-        <div class="row gx-5 gx-xl-10">
-            <!--begin::Col-->
-            <div class="col-xxl-6 mb-5 mb-xl-10">
-                @include('back/partials/widgets/charts/_widget-8')
+        <div class="card card-flush">
+
+            <div class="card-header mt-6">
+                <h2 class="mb-5">
+                    Whatsapp API Setting
+                </h2>
             </div>
-            <!--end::Col-->
-            <!--begin::Col-->
-            <div class="col-xl-6 mb-5 mb-xl-10">
-                @include('back/partials/widgets/tables/_widget-16')
+
+            <div class="card-body pt-0">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="fv-row mb-10 px-10">
+                            <label class="fw-bold fs-6 mb-2">Status Server</label>
+                            <div class="border  rounded mt-3">
+                                <div class="text-center ">
+                                    <p class="text-gray-700 fs-3 fw-bold py-7" id="status_server">
+                                        Loading...
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fv-row mb-10 px-10">
+                            <label class="fw-bold fs-6 mb-2">Session Whatsapp</label>
+                            <div class="border  rounded mt-3">
+                                <div class="text-center ">
+                                    <p class="text-gray-700 fs-3 fw-bold py-7" id="status_whatsapp">
+                                        Loading...
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-grid mb-10 px-10">
+                            <button class="btn btn-flex btn-primary px-6 justify-content-center mb-5" id="start_button">
+                                <i class="fa-solid fa-play fs-2x"></i>
+                                <span class="d-flex flex-column align-items-start ms-2">
+                                    <span class="fs-3 fw-bold">Start</span>
+                                    <span class="fs-7">Hubungkan Ke whatsapp</span>
+                                </span>
+                            </button>
+                            <button class="btn btn-flex btn-danger px-6 justify-content-center mb-5" id="stop_button">
+                                <i class="fa-solid fa-stop fs-2x"></i>
+                                <span class="d-flex flex-column align-items-start ms-2">
+                                    <span class="fs-3 fw-bold">Stop</span>
+                                    <span class="fs-7">Matikan koneksi whatsapp</span>
+                                </span>
+                            </button>
+                            <button class="btn btn-flex btn-warning px-6 justify-content-center mb-5" id="reset_button">
+                                <i class="fa-solid fa-repeat fs-2x"></i>
+                                <span class="d-flex flex-column align-items-start ms-2">
+                                    <span class="fs-3 fw-bold">reset</span>
+                                    <span class="fs-7">hubungkan kembali ke whatsapp</span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="border border-hover-primary rounded mt-3">
+                            <div class="text-center pt-15 pb-15">
+                                <h2 class="fs-2x fw-bold mb-0">Whatsapp QR Code</h2>
+                                <p class="text-gray-500 fs-4 fw-semibold py-7" id="info">
+                                    Silahkan scan QR Code untuk menghubungkan ke Whatsapp API <br>
+                                    Qr Code akan berubah setiap 30 detik
+                                </p>
+                                <img class="p-10" style="width: 100%" alt="" id="qr_code">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
-            <!--end::Col-->
         </div>
-        <!--end::Row-->
-        <!--begin::Row-->
-        <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
-            <!--begin::Col-->
-            <div class="col-xxl-6">
-                @include('back/partials/widgets/cards/_widget-18')
-            </div>
-            <!--end::Col-->
-            <!--begin::Col-->
-            <div class="col-xl-6">
-                @include('back/partials/widgets/charts/_widget-36')
-            </div>
-            <!--end::Col-->
-        </div>
-        <!--end::Row-->
-        <!--begin::Row-->
-        <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
-            <!--begin::Col-->
-            <div class="col-xl-4">
-                @include('back/partials/widgets/charts/_widget-35')
-            </div>
-            <!--end::Col-->
-            <!--begin::Col-->
-            <div class="col-xl-8">
-                @include('back/partials/widgets/tables/_widget-14')
-            </div>
-            <!--end::Col-->
-        </div>
-        <!--end::Row-->
-        <!--begin::Row-->
-        <div class="row gx-5 gx-xl-10">
-            <!--begin::Col-->
-            <div class="col-xl-4 mb-5 mb-xl-0">
-                @include('back/partials/widgets/charts/_widget-31')
-            </div>
-            <!--end::Col-->
-            <!--begin::Col-->
-            <div class="col-xl-8">
-                @include('back/partials/widgets/charts/_widget-24')
-            </div>
-            <!--end::Col-->
-        </div>
-        <!--end::Row-->
     </div>
     <!--end::Container-->
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            let status_server = $('#status_server');
+            let status_whatsapp = $('#status_whatsapp');
+            let qr_code = $('#qr_code');
+            let info = $('#info');
+            let start_button = $('#start_button');
+            let stop_button = $('#stop_button');
+            let reset_button = $('#reset_button');
+
+
+            function getMySession() {
+                $.ajax({
+                    url: '{{ route('api.whatsapp.get-my-session') }}',
+                    type: 'GET',
+                    success: function(response) {
+                        // console.log(response);
+                        status_whatsapp.text(`${response.status} (${response.message})`);
+                        if (response.status === 'Terhubung') {
+                            info.html(
+                                'Anda Sudah Terhubung ke Whatsapp API <br> Klik Stop Untuk Mematikan Koneksi'
+                            );
+                            start_button.hide();
+                            stop_button.show();
+                            reset_button.show();
+                        } else {
+                            info.html(
+                                'Anda Belum Terhubung ke Whatsapp API, Silahkan Klik Start Untuk Terhubung'
+                            );
+
+                            start_button.show();
+                            stop_button.hide();
+                            reset_button.hide();
+                        }
+                    },
+                    error: function(error) {
+                        console.log(error);
+                        status_whatsapp.text('Error (Error Get Session)');
+                    }
+                });
+            }
+
+            function stopSession() {
+                $.ajax({
+                    url: '{{ route('api.whatsapp.delete-session') }}',
+                    type: 'POST',
+                    success: function(response) {
+                        console.log(response);
+                        getMySession();
+                    },
+                    error: function(error) {
+                        console.log(error);
+                        status_whatsapp.text('Error (Error Stop Session)');
+                    }
+                });
+            }
+
+            function startSession() {
+                start_button.attr('disabled', true);
+                ws.send(JSON.stringify({
+                    "session": "{{ env('WHATSAPP_API_SESSION') }}",
+                }));
+            }
+
+
+            const ws = new WebSocket('{{ env('WHATSAPP_API_WEBSOCKET_URL') }}');
+            ws.onopen = function() {
+                console.log('Connected to WebSocket Server');
+                status_server.text('Terhubung (WebSocket Connected)');
+
+            };
+
+            ws.onmessage = (e) => {
+                console.log('Message:', e.data);
+                let data = JSON.parse(e.data);
+                if (data.type === 'qr') {
+                    qr_code.attr('src', data.qr);
+                    info.html(
+                        'Silahkan scan QR Code untuk menghubungkan ke Whatsapp API <br> Qr Code akan berubah setiap 30 detik'
+                    );
+                }
+            };
+
+            ws.onerror = function(error) {
+                console.log('WebSocket Error ', error);
+                status_server.text('Error (WebSocket Error)');
+            };
+            ws.onclose = () => {
+                console.log('WebSocket Closed');
+                status_server.text('Tidak Terhubung (WebSocket Closed)');
+            };
+
+
+
+            getMySession();
+
+            stop_button.click(function() {
+                stopSession();
+            });
+            start_button.click(function() {
+                startSession();
+            });
+
+            reset_button.click(function() {
+                stopSession();
+                setTimeout(() => {
+                    startSession();
+                }, 1000);
+            });
+
+        });
+    </script>
 @endsection
