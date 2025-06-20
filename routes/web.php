@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
+Route::get('/', function () {
+    return redirect()->route('back.home.index');
+});
+
 Route::name('auth.')->group(function () {
     Route::get('login', [\App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
     Route::post('login', [\App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login.proses');
@@ -12,7 +16,7 @@ Route::name('auth.')->group(function () {
 
     Route::get('password/reset', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
     Route::post('password/email', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-    
+
     Route::get('password/reset/{token}', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])->name('password.reset');
     Route::post('password/reset', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])->name('password.update');
 
@@ -24,5 +28,8 @@ Route::name('auth.')->group(function () {
 Route::middleware(['auth'])->name('back.')->group(function () {
     Route::prefix('home')->name('home.')->group(function () {
         Route::get('/', [App\Http\Controllers\Back\HomeController::class, 'index'])->name('index');
+        Route::post('/create-session', [App\Http\Controllers\Back\HomeController::class, 'createSession'])->name('createSession');
     });
+
+    Route::resource('user', App\Http\Controllers\Back\UserController::class);
 });

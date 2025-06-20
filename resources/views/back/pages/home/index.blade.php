@@ -5,13 +5,97 @@
         <div class="card card-flush mb-5">
 
             <div class="card-header mt-6">
-                <h2 class="mb-5">
-                    Whatsapp API Setting
-                </h2>
+
+                <div class="card-title">
+                    <h2 class="mb-5">
+                        Whatsapp Session
+                    </h2>
+                </div>
+                <div class="card-toolbar">
+                    <div class="d-flex justify-content-end" data-kt-user-table-toolbar="base">
+                        <a href="#" class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#add_session">
+                            <i class="ki-duotone ki-plus fs-2"></i>Tambah session</a>
+
+                        <div class="modal fade" tabindex="-1" id="add_session">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h3 class="modal-title">Tambah Session Whatsapp</h3>
+
+                                        <!--begin::Close-->
+                                        <div class="btn btn-icon btn-sm btn-active-light-primary ms-2"
+                                            data-bs-dismiss="modal" aria-label="Close">
+                                            <i class="ki-duotone ki-cross fs-1"><span class="path1"></span><span
+                                                    class="path2"></span></i>
+                                        </div>
+                                        <!--end::Close-->
+                                    </div>
+                                    <form action="{{ route('back.home.createSession') }}" method="post">
+                                        @csrf
+
+                                        <div class="modal-body">
+                                            <div class="mb-10">
+                                                <label class="form-label required">Nama Session</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-text" id="basic-addon3">
+                                                        {{ Str::slug(substr(Auth::user()->name, 0, 5)) }}{{ Auth::user()->id }}_
+                                                    </span>
+                                                    <input type="text" class="form-control" name="session_name" required
+                                                        value="{{ old('session_name') }}" aria-describedby="basic-addon3"
+                                                        placeholder="Nama Session Whatsapp">
+                                                </div>
+                                                @error('session_name')
+                                                    <small class="text-danger">
+                                                        {{ $message }}
+                                                    </small>
+                                                @enderror
+                                                <small class="text-muted">Session nama tidak menggunakan spasi,</small>
+
+
+                                            </div>
+                                            <div class="mb-10">
+                                                <label class="form-label required">No Telp</label>
+
+                                                <input type="text" class="form-control" name="phone_number" required
+                                                    value="{{ old('phone_number') }}" placeholder="No Telp Whatsapp"
+                                                    aria-label="No Telp Whatsapp" aria-describedby="basic-addon3">
+                                                @error('phone_number')
+                                                    <small class="text-danger">
+                                                        {{ $message }}
+                                                    </small>
+                                                @enderror
+                                                <small class="text-muted">No telp menggunakan kode negara di depan tanpa
+                                                    spasi atau strip, contoh: (<code>+628xxx</code>)</small>
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-light"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Tambah</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
 
             <div class="card-body pt-0">
+                <select class="form-select" aria-label="Select example">
+                    @foreach ($sessions as $session)
+                        <option value="{{ $session->id }}"
+                            {{ $session->id == request('session') ? 'selected' : '' }}>
+                            {{ $session->session_name    }} ({{ $session->phone_number }})
+                        </option>
 
+                    @endforeach
+                </select>
 
             </div>
         </div>
