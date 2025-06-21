@@ -9,13 +9,11 @@ use Illuminate\Support\Facades\Http;
 class WhatsappController extends Controller
 {
     private $url_wa;
-    private $session_wa;
     private $secret_key;
 
     public function __construct()
     {
         $this->url_wa = env('WHATSAPP_API_URL');
-        $this->session_wa = env('WHATSAPP_API_SESSION');
         $this->secret_key = env('WHATSAPP_API_SECRET');
     }
 
@@ -52,6 +50,13 @@ class WhatsappController extends Controller
 
     public function getMySession(Request $request)
     {
+        $session = $request->session;
+        if (!$session) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Session is required',
+            ], 400);
+        }
         try {
             $response_wa = Http::get($this->url_wa  . "/sessions?key=" . $this->secret_key);
 
@@ -64,7 +69,7 @@ class WhatsappController extends Controller
 
                 return response()->json($response, $response_wa->status());
             } else {
-                if (in_array($this->session_wa, $response_wa->json()['data'])) {
+                if (in_array($session, $response_wa->json()['data'])) {
                     $response = [
                         'status' => 'Terhubung',
                         'message' => 'Session found',
@@ -80,7 +85,6 @@ class WhatsappController extends Controller
 
                     return response()->json($response);
                 }
-
             }
         } catch (\Exception $e) {
             $response = [
@@ -95,9 +99,16 @@ class WhatsappController extends Controller
 
     public function deleteSession(Request $request)
     {
+        $session = $request->session;
+        if (!$session) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Session is required',
+            ], 400);
+        }
         try {
             $response_wa = Http::get($this->url_wa  . "/delete-session", [
-                'session' => $this->session_wa
+                'session' => $session,
             ]);
 
             if ($response_wa->status() != 200) {
@@ -128,9 +139,16 @@ class WhatsappController extends Controller
 
     public function sendMessage(Request $request)
     {
+        $session = $request->session;
+        if (!$session) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Session is required',
+            ], 400);
+        }
         try {
             $response_wa = Http::post($this->url_wa  . "/send-message", [
-                'session' => $this->session_wa,
+                'session' => $session,
                 'to' => $request->phone,
                 'text' => $request->message
             ]);
@@ -179,9 +197,16 @@ class WhatsappController extends Controller
         //         }
         //     ]
         // }
+        $session = $request->session;
+        if (!$session) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Session is required',
+            ], 400);
+        }
         try {
             $response_wa = Http::post($this->url_wa  . "/send-bulk-message", [
-                'session' => $this->session_wa,
+                'session' => $session,
                 'delay' => $request->delay,
                 'data' => $request->data
             ]);
@@ -213,12 +238,19 @@ class WhatsappController extends Controller
 
     public function sendImage(Request $request)
     {
+        $session = $request->session;
+        if (!$session) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Session is required',
+            ], 400);
+        }
         try {
             $response_wa = Http::post($this->url_wa  . "/send-image", [
-                'session' => $this->session_wa,
+                'session' => $session,
                 'to' => $request->phone,
                 'urlImage' => $request->image,
-                'text' => $request->caption
+                'text' => $request->message
             ]);
 
             if ($response_wa->status() != 200) {

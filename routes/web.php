@@ -32,4 +32,13 @@ Route::middleware(['auth'])->name('back.')->group(function () {
     });
 
     Route::resource('user', App\Http\Controllers\Back\UserController::class);
+
+    Route::prefix('documentation')->name('documentation.')->group(function () {
+        Route::get('/', function () {
+            return redirect()->route('back.documentation.sendMessage');
+        })->name('index');
+        Route::get('/send-message', [App\Http\Controllers\Back\DocumentationController::class, 'sendMessage'])->name('sendMessage');
+        Route::get('/send-image', [App\Http\Controllers\Back\DocumentationController::class, 'sendImage'])->name('sendImage');
+        Route::get('/send-bulk-message', [App\Http\Controllers\Back\DocumentationController::class, 'sendBulkMessage'])->name('sendBulkMessage');
+    });
 });

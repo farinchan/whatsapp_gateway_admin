@@ -7,7 +7,7 @@
             class="menu-item {{ request()->routeIs('back.home.*') ? 'here show' : '' }} py-2">
             <span class="menu-link menu-center">
                 <span class="menu-icon me-0">
-                    <i class="ki-outline ki-home-2 fs-2x"></i>
+                    <i class="ki-duotone ki-home fs-2x"></i>
                 </span>
                 <span class="menu-title">Home</span>
             </span>
@@ -24,7 +24,7 @@
                 <span class="menu-title">Pesan</span>
             </span>
         </a>
-        <a href="{{ route('back.home.index') }}" class="menu-item py-2">
+        <a href="{{ route('back.documentation.index') }}" class="menu-item {{ request()->routeIs('back.documentation.*') ? 'here show' : '' }} py-2">
             <span class="menu-link menu-center">
                 <span class="menu-icon me-0">
                     <i class="ki-duotone ki-document fs-2x">

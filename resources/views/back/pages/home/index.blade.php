@@ -88,13 +88,15 @@
 
             <div class="card-body pt-0">
                 <select class="form-select" aria-label="Select example">
-                    @foreach ($sessions as $session)
-                        <option value="{{ $session->id }}"
-                            {{ $session->id == request('session') ? 'selected' : '' }}>
-                            {{ $session->session_name    }} ({{ $session->phone_number }})
+                    @forelse ($sessions as $session)
+                        <option value="{{ $session->id }}" {{ $session->id == request('session') ? 'selected' : '' }}>
+                            {{ $session->session_name }} ({{ $session->phone_number }})
                         </option>
-
-                    @endforeach
+                    @empty
+                        <option value="" selected disabled>
+                            Tidak ada session whatsapp yang tersedia
+                        </option>
+                    @endforelse
                 </select>
 
             </div>
@@ -177,6 +179,8 @@
 
 @section('scripts')
     <script>
+        let session_name = @json($session_name);
+        // console.log(session_name);
         $(document).ready(function() {
             let status_server = $('#status_server');
             let status_whatsapp = $('#status_whatsapp');
@@ -189,8 +193,11 @@
 
             function getMySession() {
                 $.ajax({
-                    url: '{{ route('api.whatsapp.get-my-session') }}',
+                    url: '{{ route('api.v1.whatsapp.get-my-session') }}',
                     type: 'GET',
+                    data: {
+                        session: session_name
+                    },
                     success: function(response) {
                         // console.log(response);
                         status_whatsapp.text(`${response.status} (${response.message})`);
@@ -220,8 +227,11 @@
 
             function stopSession() {
                 $.ajax({
-                    url: '{{ route('api.whatsapp.delete-session') }}',
+                    url: '{{ route('api.v1.whatsapp.delete-session') }}',
                     type: 'POST',
+                    data: {
+                        session: session_name
+                    },
                     success: function(response) {
                         console.log(response);
                         getMySession();
@@ -236,7 +246,7 @@
             function startSession() {
                 start_button.attr('disabled', true);
                 ws.send(JSON.stringify({
-                    "session": "{{ env('WHATSAPP_API_SESSION') }}",
+                    "session": session_name
                 }));
             }
 

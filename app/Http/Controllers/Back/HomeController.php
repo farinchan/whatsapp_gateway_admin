@@ -6,13 +6,50 @@ use App\Http\Controllers\Controller;
 use App\Models\WaSession;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
+    private $url_wa;
+    private $session_wa;
+    private $secret_key;
+
+    public function __construct()
+    {
+        $this->url_wa = env('WHATSAPP_API_URL');
+        $this->session_wa = env('WHATSAPP_API_SESSION');
+        $this->secret_key = env('WHATSAPP_API_SECRET');
+    }
     public function index(Request $request)
     {
+        $session = $request->session;
+        if (!$session) {
+            $sessionFirst = WaSession::where('user_id', Auth::id())->first() ?? null;
+            if ($sessionFirst) {
+                $session = $sessionFirst->session_name;
+            } else {
+                $session = null;
+            }
+        } else {
+            $session = WaSession::where('user_id', Auth::id())->where('session_name', $session)->exists() ?? null;
+            if (!$session) {
+                $session = null;
+            } else {
+                $session = $request->session;
+            }
+        }
+        try {
+            $response_wa = Http::get($this->url_wa  . "/sessions?key=" . $this->secret_key);
+
+            if ($response_wa->status() == 200) {
+                $sessionRes = $response_wa->json()['data'];
+
+            }
+        } catch (\Exception $e) {
+        }
+
         $data = [
             'title' => 'Whatsapp Setting',
             'breadcrumbs' => [
@@ -21,8 +58,10 @@ class HomeController extends Controller
                     'link' => route('back.home.index')
                 ],
             ],
-            'sessions' => WaSession::where('user_id', Auth::id())->get(),
+            'session_name' => $session,
+            'sessions' =>WaSession::where('user_id', Auth::id())->get(),
         ];
+        // dd($data);
         return view('back.pages.home.index', $data);
     }
 
