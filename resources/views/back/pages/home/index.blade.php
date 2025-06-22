@@ -87,8 +87,7 @@
             </div>
 
             <div class="card-body pt-0">
-                <select class="form-select" aria-label="Select example" id="session_select"
-                    onchange="window.location.href='{{ route('back.home.index') }}?session=' + this.value">
+                <select class="form-select" aria-label="Select example" id="session_select">
                     @forelse ($sessions as $session)
                         <option value="{{ $session->session_name }}" {{ $session->session_name == request('session') ? 'selected' : '' }}>
                             {{ $session->session_name }} ({{ $session->phone_number }})
@@ -183,6 +182,23 @@
         let session_name = @json($session_name);
         // console.log(session_name);
         $(document).ready(function() {
+
+            // Show SweetAlert loading when session is changed
+            $('#session_select').change(function() {
+                let selectedSession = $(this).val();
+                if (selectedSession) {
+                    Swal.fire({
+                        title: 'Loading...',
+                        text: 'Mengganti session, mohon tunggu.',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                    window.location.href = `?session=${selectedSession}`;
+                }
+            });
+
             let status_server = $('#status_server');
             let status_whatsapp = $('#status_whatsapp');
             let qr_code = $('#qr_code');
