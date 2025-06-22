@@ -87,9 +87,10 @@
             </div>
 
             <div class="card-body pt-0">
-                <select class="form-select" aria-label="Select example">
+                <select class="form-select" aria-label="Select example" id="session_select"
+                    onchange="window.location.href='{{ route('back.home.index') }}?session=' + this.value">
                     @forelse ($sessions as $session)
-                        <option value="{{ $session->id }}" {{ $session->id == request('session') ? 'selected' : '' }}>
+                        <option value="{{ $session->session_name }}" {{ $session->session_name == request('session') ? 'selected' : '' }}>
                             {{ $session->session_name }} ({{ $session->phone_number }})
                         </option>
                     @empty
