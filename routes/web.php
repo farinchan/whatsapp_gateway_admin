@@ -41,4 +41,15 @@ Route::middleware(['auth'])->name('back.')->group(function () {
         Route::get('/send-image', [App\Http\Controllers\Back\DocumentationController::class, 'sendImage'])->name('sendImage');
         Route::get('/send-bulk-message', [App\Http\Controllers\Back\DocumentationController::class, 'sendBulkMessage'])->name('sendBulkMessage');
     });
+
+    Route::prefix('message')->name('message.')->group(function () {
+        Route::get('/', function () {
+            return redirect()->route('back.message.sendMessage');
+        })->name('index');
+        Route::get('/send-message', [App\Http\Controllers\Back\MessageController::class, 'sendMessage'])->name('sendMessage');
+        Route::get('/send-image', [App\Http\Controllers\Back\MessageController::class, 'sendImage'])->name('sendImage');
+        Route::post('/send-image-process', [App\Http\Controllers\Back\MessageController::class, 'sendImageProcess'])->name('sendImageProcess');
+        Route::get('/send-bulk-message', [App\Http\Controllers\Back\MessageController::class, 'sendBulkMessage'])->name('sendBulkMessage');
+        Route::post('/send-bulk-message-process', [App\Http\Controllers\Back\MessageController::class, 'sendBulkMessageProcess'])->name('sendBulkMessageProcess');
+    });
 });

@@ -1,367 +1,111 @@
 @extends('back.app')
 @section('styles')
-    <link href="{{ asset('back/plugins/custom/prismjs/prismjs.bundle.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
     <!--begin::Container-->
     <div id="kt_content_container" class=" container-xxl ">
-        @include('back.pages.documentation.header')
-        <div class="card card-flush mb-5">
+        @include('back.pages.message.header')
+        <div class="card card-flush">
 
             <div class="card-header mt-6">
-
-                <div class="card-title">
-                    <h2 class="">
-                        Send Bulk Message
-                    </h2>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="mb-5">
-                    <h4 class="mb-3">API Endpoint</h4>
-                    <p class="mb-4">
-                        Endpoint ini digunakan untuk mengirim pesan WhatsApp secara massal menggunakan API. Anda perlu menyediakan <code>session</code> yang valid, nilai <code>delay</code> (dalam milidetik) antar pesan, dan array <code>data</code> berisi daftar nomor tujuan (<code>to</code>) beserta isi pesan (<code>text</code>) yang akan dikirim.
-                    </p>
-                    <table class="table table-bordered">
-                        <tr>
-                            <th style="width: 150px;">Method</th>
-                            <td><span class="badge badge-success">POST</span></td>
-                        </tr>
-                        <tr>
-                            <th>URL</th>
-                            <td><code>{{ route('api.v1.whatsapp.send-bulk-message') }}</code></td>
-                        </tr>
-                        <tr>
-                            <th>Headers</th>
-                            <td>
-                                <ul class="mb-0">
-                                    <li><code>Accept: application/json</code></li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Body</th>
-                            <td>
-                                <pre class="mb-0"><code>{
-    "session": "YOUR_SESSION_ID",
-    "delay" : 2000,
-    "data" : [
-        {
-            "to" : "62xxxxxxxxxxx",
-            "text" : "YOUR_MESSAGE_TEXT_1"
-        },
-        {
-            "to" : "62xxxxxxxxxxx",
-            "text" : "YOUR_MESSAGE_TEXT_2"
-        },
-        ...
-    ]
- }</code></pre>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Response</th>
-                            <td>
-                                <pre class="mb-0"><code>{
-    "status": "success",
-    "message": "Bulk message sent successfully"
- }</code></pre>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+                <h2 class="mb-5">
+                    Kirim Pesan Whatsapp
+                </h2>
             </div>
 
-        </div>
-        <div class="card card-flush mb-5">
+            <div class="card-body pt-0">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="{{ asset('img_ext/wa_massage.png') }}" style="width: 100%" alt="" />
+                    </div>
+                    <div class="col-md-8">
+                        <form id="kt_modal_create_discipline_rule_form" class="form" method="POST"
+                            action="{{ route('back.message.sendBulkMessageProcess') }}">
+                            @csrf
+                            <div class="fv-row mb-10">
+                                <label class="required fw-bold fs-6 mb-2">Session</label>
+                                <select class="form-select form-select-solid" aria-label="Select session whatsapp"
+                                    name="session" required>
+                                    @forelse ($sessions as $session)
+                                        <option value="{{ $session->session_name }}">
+                                            {{ $session->session_name }} ({{ $session->phone_number }})
+                                        </option>
+                                    @empty
+                                        <option value="" selected disabled>
+                                            Tidak ada session whatsapp yang tersedia
+                                        </option>
+                                    @endforelse
+                                </select>
+                            </div>
+                            <div class="fv-row mb-10">
+                                <label class="required fw-bold fs-6 mb-2">Delay (milisecond)</label>
+                                <input type="number" class="form-control form-control-solid form-control-lg fw-bold"
+                                    name="delay" placeholder="1000" value="2000" min="1000" required   />
+                                <small class="text-muted">Jeda antara pengiriman pesan, dalam milisecond. Contoh: <code>2000</code> untuk 2 detik.</small>
+                            </div>
+                            <div class="fv-row mb-10">
+                                <!--begin::Repeater-->
+                                <div id="phone_list">
+                                    <!--begin::Form group-->
+                                    <div class="form-group">
+                                        <div data-repeater-list="phones">
+                                            <div data-repeater-item>
+                                                <div class="form-group row mb-5">
+                                                    <div class="col-md-9">
+                                                        <label class="form-label">Kepada (No Whatsapp)</label>
+                                                        <input type="number"
+                                                            class="form-control form-control-solid mb-2 mb-md-0"
+                                                            placeholder="628xxxxxxxxxx" name="phone" required />
+                                                        <small class="text-muted">Pastikan nomor whatsapp benar, nomor
+                                                            diawali dengan kode
+                                                            negara tanpa tanda <code>+</code> atau <code>0</code>, dengan
+                                                            contoh
+                                                            <code>6281234567890</code></small>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <a href="javascript:;" data-repeater-delete
+                                                            class="btn btn-sm btn-light-danger mt-3 mt-md-8">
+                                                            <i class="ki-duotone ki-trash fs-5"><span
+                                                                    class="path1"></span><span class="path2"></span><span
+                                                                    class="path3"></span><span class="path4"></span><span
+                                                                    class="path5"></span></i>
+                                                            Delete
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end::Form group-->
 
-            <div class="card-header mt-6">
+                                    <!--begin::Form group-->
+                                    <div class="form-group mt-5">
+                                        <a href="javascript:;" data-repeater-create class="btn btn-light-primary">
+                                            <i class="ki-duotone ki-plus fs-3"></i>
+                                            Add
+                                        </a>
+                                    </div>
+                                    <!--end::Form group-->
+                                </div>
+                                <!--end::Repeater-->
+                            </div>
 
-                <div class="card-title">
-                    <h2 class="">
-                        Documentation
-                    </h2>
+                            <div class="fv-row mb-10">
+                                <label class="required fw-bold fs-6 mb-2">Pesan</label>
+                                <textarea class="form-control form-control-solid form-control-lg fw-bold" name="message" rows="10" placeholder=""></textarea>
+                            </div>
+
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary" id="send_message_btn">
+                                    <span class="indicator-label">Kirim Pesan</span>
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
                 </div>
-                <div class="card-toolbar">
-                    <ul class="nav nav-tabs nav-line-tabs nav-stretch fs-6 border-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-bs-toggle="tab" href="#curl">cURL</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link " data-bs-toggle="tab" href="#php">PHP</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#javascript">Javascript</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#python">Python</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#go">Go</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#iot">IoT</a>
-                        </li>
-                    </ul>
-                </div>
+
             </div>
-            <div class="card-body">
-                <div class="tab-content" id="myTabContent">
-
-                    <div class="tab-pane fade show active" id="curl" role="tabpanel">
-                        <div class="highlight"> <button class="highlight-copy btn" data-bs-toggle="tooltip"
-                                data-bs-original-title="Copy code" data-kt-initialized="1">copy</button>
-                            <div class="highlight-code">
-                                <pre class="language-bash" tabindex="0"><code class="language-bash">
-<span class="token bash language-bash"><span class="token comment"># Contoh cURL untuk POST API Send Bulk Whatsapp Message</span>
-curl -X POST '{{ route('api.v1.whatsapp.send-bulk-message') }}' \
-  -H 'Accept: application/json' \
-  -H 'Content-Type: application/json' \
-  -d '{
-    "session": "YOUR_SESSION_ID",
-    "delay": 2000,
-    "data": [
-      {
-        "to": "62xxxxxxxxxxx",
-        "text": "YOUR_MESSAGE_TEXT_1"
-      },
-      {
-        "to": "62xxxxxxxxxxx",
-        "text": "YOUR_MESSAGE_TEXT_2"
-      }
-    ]
-}'
-</span>
-                                </code></pre>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade show" id="php" role="tabpanel">
-                        <div class="highlight"> <button class="highlight-copy btn" data-bs-toggle="tooltip"
-                                data-bs-original-title="Copy code" data-kt-initialized="1">copy</button>
-                            <div class="highlight-code">
-                                <pre class="language-php" tabindex="0"><code class="language-php">
-<span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
-// Contoh PHP Native untuk POST API Send Bulk Whatsapp Message
-$url = '{{ route('api.v1.whatsapp.send-bulk-message') }}';
-$data = [
-    'session' => 'YOUR_SESSION_ID',
-    'delay' => 2000,
-    'data' => [
-        [
-            'to' => '62xxxxxxxxxxx',
-            'text' => 'YOUR_MESSAGE_TEXT_1'
-        ],
-        [
-            'to' => '62xxxxxxxxxxx',
-            'text' => 'YOUR_MESSAGE_TEXT_2'
-        ]
-    ]
-];
-$options = [
-    'http' => [
-        'header'  => "Content-type: application/json\r\nAccept: application/json\r\n",
-        'method'  => 'POST',
-        'content' => json_encode($data)
-    ]
-];
-$context  = stream_context_create($options);
-$result = file_get_contents($url, false, $context);
-$response = json_decode($result, true);
-print_r($response);
-</span>
-                                </code></pre>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade" id="javascript" role="tabpanel">
-                        <div class="highlight"> <button class="highlight-copy btn" data-bs-toggle="tooltip"
-                                data-bs-original-title="Copy code" data-kt-initialized="1">copy</button>
-                            <div class="highlight-code">
-                                <pre class="language-javascript" tabindex="0"><code class="language-javascript">
-<span class="token javascript language-javascript">// Contoh JavaScript untuk POST API Send Bulk Whatsapp Message
-fetch('{{ route('api.v1.whatsapp.send-bulk-message') }}', {
-    method: 'POST',
-    headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-        session: 'YOUR_SESSION_ID',
-        delay: 2000,
-        data: [
-            {
-                to: '62xxxxxxxxxxx',
-                text: 'YOUR_MESSAGE_TEXT_1'
-            },
-            {
-                to: '62xxxxxxxxxxx',
-                text: 'YOUR_MESSAGE_TEXT_2'
-            }
-        ]
-    })
-})
-.then(response => response.json())
-.then(data => {
-    console.log(data);
-})
-.catch(error => {
-    console.error(error);
-});
-</span>
-                                </code></pre>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade" id="python" role="tabpanel">
-                        <div class="highlight"> <button class="highlight-copy btn" data-bs-toggle="tooltip"
-                                data-bs-original-title="Copy code" data-kt-initialized="1">copy</button>
-                            <div class="highlight-code">
-                                <pre class="language-python" tabindex="0"><code class="language-python">
-<span class="token python language-python"># Contoh Python untuk POST API Send Bulk Whatsapp Message
-import requests
-import json
-
-url = '{{ route('api.v1.whatsapp.send-bulk-message') }}'
-headers = {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
-}
-payload = {
-    'session': 'YOUR_SESSION_ID',
-    'delay': 2000,
-    'data': [
-        {
-            'to': '62xxxxxxxxxxx',
-            'text': 'YOUR_MESSAGE_TEXT_1'
-        },
-        {
-            'to': '62xxxxxxxxxxx',
-            'text': 'YOUR_MESSAGE_TEXT_2'
-        }
-    ]
-}
-
-response = requests.post(url, headers=headers, data=json.dumps(payload))
-data = response.json()
-print(data)
-</span>
-                                </code></pre>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade" id="go" role="tabpanel">
-                        <div class="highlight"> <button class="highlight-copy btn" data-bs-toggle="tooltip"
-                                data-bs-original-title="Copy code" data-kt-initialized="1">copy</button>
-                            <div class="highlight-code">
-                                <pre class="language-clike" tabindex="0"><code class="language-clike">
-<span class="token go language-clike">// Contoh Go untuk POST API Send Bulk Whatsapp Message
-package main
-
-import (
-    "bytes"
-    "encoding/json"
-    "fmt"
-    "io/ioutil"
-    "net/http"
-)
-
-func main() {
-    url := "{{ route('api.v1.whatsapp.send-bulk-message') }}"
-    payload := map[string]interface{}{
-        "session": "YOUR_SESSION_ID",
-        "delay":   2000,
-        "data": []map[string]string{
-            {
-                "to":   "62xxxxxxxxxxx",
-                "text": "YOUR_MESSAGE_TEXT_1",
-            },
-            {
-                "to":   "62xxxxxxxxxxx",
-                "text": "YOUR_MESSAGE_TEXT_2",
-            },
-        },
-    }
-    jsonData, _ := json.Marshal(payload)
-
-    req, _ := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
-    req.Header.Set("Accept", "application/json")
-    req.Header.Set("Content-Type", "application/json")
-
-    client := &http.Client{}
-    resp, err := client.Do(req)
-    if err != nil {
-        fmt.Println("Error:", err)
-        return
-    }
-    defer resp.Body.Close()
-
-    body, _ := ioutil.ReadAll(resp.Body)
-    fmt.Println(string(body))
-}
-</span>
-                                </code></pre>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tab-pane fade" id="iot" role="tabpanel">
-                        <div class="highlight"> <button class="highlight-copy btn" data-bs-toggle="tooltip"
-                                data-bs-original-title="Copy code" data-kt-initialized="1">copy</button>
-                            <div class="highlight-code">
-                                <pre class="language-clike" tabindex="0"><code class="language-clike">
-// Contoh ESP32 (Arduino) untuk POST API Send Bulk Whatsapp Message
-#include WiFi.h
-#include HTTPClient.h
-
-const char* ssid = "YOUR_WIFI_SSID";
-const char* password = "YOUR_WIFI_PASSWORD";
-const char* serverUrl = "{{ route('api.v1.whatsapp.send-bulk-message') }}";
-
-void setup() {
-  Serial.begin(115200);
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("WiFi connected");
-
-  if (WiFi.status() == WL_CONNECTED) {
-    HTTPClient http;
-    http.begin(serverUrl);
-    http.addHeader("Content-Type", "application/json");
-    http.addHeader("Accept", "application/json");
-
-    String payload = "{\"session\":\"YOUR_SESSION_ID\",\"delay\":2000,\"data\":[{\"to\":\"62xxxxxxxxxxx\",\"text\":\"YOUR_MESSAGE_TEXT_1\"},{\"to\":\"62xxxxxxxxxxx\",\"text\":\"YOUR_MESSAGE_TEXT_2\"}]}";
-    int httpResponseCode = http.POST(payload);
-
-    if (httpResponseCode > 0) {
-      String response = http.getString();
-      Serial.println(response);
-    } else {
-      Serial.print("Error on sending POST: ");
-      Serial.println(httpResponseCode);
-    }
-    http.end();
-  }
-}
-
-void loop() {
-  // kosongkan loop
-}
-</code></pre>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
         </div>
     </div>
 
@@ -369,5 +113,31 @@ void loop() {
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('back/plugins/custom/prismjs/prismjs.bundle.js') }}"></script>
+    <script src="{{ asset('back/plugins/custom/formrepeater/formrepeater.bundle.js') }}"></script>
+
+    <script>
+        $('#phone_list').repeater({
+            initEmpty: false,
+
+            defaultValues: {
+                'text-input': 'foo'
+            },
+
+            show: function() {
+                $(this).slideDown();
+            },
+
+            hide: function(deleteElement) {
+                $(this).slideUp(deleteElement);
+            }
+        });
+        $(document).ready(function() {
+            $('#kt_modal_create_discipline_rule_form').submit(function(e) {
+                $('#send_message_btn').attr('disabled', true);
+                $('#send_message_btn').html(
+                    '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
+                );
+            });
+        });
+    </script>
 @endsection

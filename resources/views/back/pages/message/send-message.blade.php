@@ -4,8 +4,8 @@
 @section('content')
     <!--begin::Container-->
     <div id="kt_content_container" class=" container-xxl ">
-        @include('back.pages.documentation.header')
-       <div class="card card-flush">
+        @include('back.pages.message.header')
+        <div class="card card-flush">
 
             <div class="card-header mt-6">
                 <h2 class="mb-5">
@@ -16,22 +16,28 @@
             <div class="card-body pt-0">
                 <div class="row">
                     <div class="col-md-4">
-                        <img src="{{ asset('ext_images/wa_massage.png') }}" style="width: 100%" alt="" />
+                        <img src="{{ asset('img_ext/wa_massage.png') }}" style="width: 100%" alt="" />
                     </div>
                     <div class="col-md-8">
                         <form id="kt_modal_create_discipline_rule_form" class="form" method="POST">
                             <div class="fv-row mb-10">
                                 <label class="required fw-bold fs-6 mb-2">Session</label>
-                                <input class="form-control form-control-solid form-control-lg fw-bold" type="text"
-                                    placeholder="628++++" name="phone" />
-                                <small class="text-muted">Pastikan nomor whatsapp benar, nomor diawali dengan kode
-                                    negara tanpa tanda <code>+</code> atau <code>0</code>, dengan contoh
-                                    <code>6281234567890</code></small>
+                                <select class="form-select form-select-solid" aria-label="Select session whatsapp" name="session" required>
+                                    @forelse ($sessions as $session)
+                                        <option value="{{ $session->session_name }}">
+                                            {{ $session->session_name }} ({{ $session->phone_number }})
+                                        </option>
+                                    @empty
+                                        <option value="" selected disabled>
+                                            Tidak ada session whatsapp yang tersedia
+                                        </option>
+                                    @endforelse
+                                </select>
                             </div>
                             <div class="fv-row mb-10">
                                 <label class="required fw-bold fs-6 mb-2">Kepada (No Whatsapp)</label>
-                                <input class="form-control form-control-solid form-control-lg fw-bold" type="text"
-                                    placeholder="628++++" name="phone" />
+                                <input class="form-control form-control-solid form-control-lg fw-bold" type="number"
+                                    placeholder="628xxxxxxxxxx" name="phone" />
                                 <small class="text-muted">Pastikan nomor whatsapp benar, nomor diawali dengan kode
                                     negara tanpa tanda <code>+</code> atau <code>0</code>, dengan contoh
                                     <code>6281234567890</code></small>
@@ -66,7 +72,7 @@
                 $('#send_message_btn').attr('disabled', true);
                 $('#send_message_btn').html(
                     '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...'
-                    );
+                );
                 e.preventDefault();
                 var formData = new FormData(this);
                 $.ajax({

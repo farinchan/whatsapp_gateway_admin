@@ -30,16 +30,17 @@ Author: Fajri Rinaldi Chan
     <meta property="og:url" content="https://keenthemes.com/metronic" />
     <meta property="og:site_name" content="Metronic by Keenthemes" />
     <link rel="canonical" href="http://preview.keenthemes.com?page=index" />
-    <link rel="shortcut icon" href="{{asset("back/media/logos/favicon.ico")}}" />
+    <link rel="shortcut icon" href="{{ asset('back/media/logos/favicon.ico') }}" />
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" /> <!--end::Fonts-->
     <!--begin::Vendor Stylesheets(used for this page only)-->
-    <link href="{{asset("back/plugins/custom/fullcalendar/fullcalendar.bundle.css")}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset("back/plugins/custom/datatables/datatables.bundle.css")}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('back/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ asset('back/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Vendor Stylesheets-->
     <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
-    <link href="{{asset("back/plugins/global/plugins.bundle.css")}}" rel="stylesheet" type="text/css" />
-    <link href="{{asset("back/css/style.bundle.css")}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('back/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('back/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
     @yield('styles')
     <script>
@@ -92,12 +93,12 @@ Author: Fajri Rinaldi Chan
         var hostUrl = "/back";
     </script>
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
-    <script src="{{asset("back/plugins/global/plugins.bundle.js")}}"></script>
-    <script src="{{asset("back/js/scripts.bundle.js")}}"></script>
+    <script src="{{ asset('back/plugins/global/plugins.bundle.js') }}"></script>
+    <script src="{{ asset('back/js/scripts.bundle.js') }}"></script>
     <!--end::Global Javascript Bundle-->
     <!--begin::Vendors Javascript(used for this page only)-->
-    <script src="{{asset("back/plugins/custom/fullcalendar/fullcalendar.bundle.js")}}"></script>
-   {{-- <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="{{ asset('back/plugins/custom/fullcalendar/fullcalendar.bundle.js') }}"></script>
+    {{-- <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/radar.js"></script>
@@ -108,17 +109,56 @@ Author: Fajri Rinaldi Chan
     <script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZonesLow.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/geodata/worldTimeZoneAreasLow.js"></script> --}}
-    <script src="{{asset("back/plugins/custom/datatables/datatables.bundle.js")}}"></script>
+    <script src="{{ asset('back/plugins/custom/datatables/datatables.bundle.js') }}"></script>
     <!--end::Vendors Javascript-->
     <!--begin::Custom Javascript(used for this page only)-->
-    <script src="{{asset("back/js/widgets.bundle.js")}}"></script>
-    <script src="{{asset("back/js/custom/widgets.js")}}"></script>
+    <script src="{{ asset('back/js/widgets.bundle.js') }}"></script>
+    <script src="{{ asset('back/js/custom/widgets.js') }}"></script>
     {{-- <script src="{{asset("back/js/custom/apps/chat/chat.js")}}"></script>
     <script src="{{asset("back/js/custom/utilities/modals/upgrade-plan.js")}}"></script>
     <script src="{{asset("back/js/custom/utilities/modals/create-campaign.js")}}"></script>
     <script src="{{asset("back/js/custom/utilities/modals/users-search.js")}}"></script> --}}
     <!--end::Custom Javascript-->
     <!--end::Javascript-->
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '{{ session('error') }}',
+            });
+        </script>
+    @endif
+
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: '{{ session('success') }}',
+            });
+        </script>
+    @endif
+
+    @if (session('warning'))
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'Warning',
+                text: '{{ session('warning') }}',
+            });
+        </script>
+    @endif
+
+    @if (session('info'))
+        <script>
+            Swal.fire({
+                icon: 'info',
+                title: 'Info',
+                text: '{{ session('info') }}',
+            });
+        </script>
+    @endif
     @yield('scripts')
 </body>
 <!--end::Body-->

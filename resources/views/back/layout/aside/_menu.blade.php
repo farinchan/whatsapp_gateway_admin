@@ -12,7 +12,7 @@
                 <span class="menu-title">Home</span>
             </span>
         </a>
-        <a href="{{ route('back.home.index') }}" class="menu-item py-2">
+        <a href="{{ route('back.message.index') }}" class="menu-item {{ request()->routeIs('back.message.*') ? 'here show' : '' }} py-2">
             <span class="menu-link menu-center">
                 <span class="menu-icon me-0">
                     <i class="ki-duotone ki-send fs-2x">

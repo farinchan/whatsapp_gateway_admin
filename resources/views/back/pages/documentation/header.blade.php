@@ -8,7 +8,7 @@
 
                   </div>
                   <div class="flex-equal d-flex justify-content-center align-items-end ms-5">
-                      <img src="{{ asset("back/media/illustrations/sketchy-1/20.png") }}" alt=""
+                      <img src="{{ asset("back/media/illustrations/sketchy-1/17.png") }}" alt=""
                           class="mw-100 mh-125px mh-lg-275px mb-lg-n12" />
                   </div>
               </div>
