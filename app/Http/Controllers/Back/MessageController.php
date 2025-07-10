@@ -90,14 +90,19 @@ class MessageController extends Controller
             $imagePath = $image->storeAs('upload', $fileName, 'public');
         }
         try {
-            $response = Http::post(route('api.v1.whatsapp.send-image'), [
-                'session' => $request->session,
-                'phone' => $request->phone,
-                'image' => Storage::url($imagePath),
-                // 'image' => "https://upload.wikimedia.org/wikipedia/id/b/b0/Kamen_rider_eurodata.png",
-                'message' => $request->message,
+            $response = Http::post(env('WHATSAPP_API_URL')  . "/send-image", [
+                'session' => env('WHATSAPP_API_SESSION'), // Use the session name from your environment variable
+                'to' => $request->phone,
+                'urlImage' => Storage::url($imagePath),
+                // 'urlImage' => "https://upload.wikimedia.org/wikipedia/id/b/b0/Kamen_rider_eurodata.png",
+                'caption' => $request->message
             ]);
-            return redirect()->back()->with('success', $response->json()['message'] ?? '-');
+
+            if ($response->status() != 200) {
+
+                return  redirect()->back()->with('error', 'Failed to send image: ' . $response->json()['message'] ?? 'Unknown error');
+            }
+            return redirect()->back()->with('success', 'Image sent successfully');
         } catch (\Throwable $th) {
             // If there is an error, you can redirect back with an error message
             return redirect()->back()->with('error', 'An error occurred: ' . $th->getMessage());
@@ -167,17 +172,23 @@ class MessageController extends Controller
                     'text' => $request->message,
                 ];
             }
-            $response = Http::post(route('api.v1.whatsapp.send-bulk-message'), [
-                'session' => $request->session,
-                'delay' => $request->delay ?? 1000, // Default to 1000 milliseconds if not provided
-                'data' => $data,
+
+            $response = Http::post(env('WHATSAPP_API_URL')  . "/send-bulk-message", [
+                'session' => env('WHATSAPP_API_SESSION'), // Use the session name from your environment variable
+                'delay' => $request->delay,
+                'data' => $data
             ]);
 
-            return redirect()->back()->with('success', $response->json()['message'] ?? '-');
+            if ($response->status() != 200) {
+                return redirect()->back()->with('error', 'Failed to send bulk message: ' . $response->json()['message'] ?? 'Unknown error');
+            }
+
+            return redirect()->back()->with('success', 'Bulk message has been sent successfully');
         } catch (\Throwable $th) {
             // If there is an error, you can redirect back with an error message
             return redirect()->back()->with('error', 'An error occurred: ' . $th->getMessage());
         }
+
 
         return redirect()->back()->with('success', 'Bulk message sent successfully');
     }

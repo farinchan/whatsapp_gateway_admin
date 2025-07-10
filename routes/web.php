@@ -19,7 +19,7 @@ Route::prefix('contact')->name('contact.')->group(function () {
 });
 
 
-Route::middleware(['guest'])->name('auth.')->group(function () {
+Route::name('auth.')->group(function () {
     Route::get('login', [\App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
     Route::post('login', [\App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login.proses');
     Route::get('logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
