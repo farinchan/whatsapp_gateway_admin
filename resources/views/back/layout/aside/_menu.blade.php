@@ -49,6 +49,7 @@
                 <span class="menu-title">Forum</span>
             </span>
         </a>
+        @role('super-admin')
         <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start"
             class="menu-item py-2  {{ request()->routeIs('back.user.*') ? 'here show' : '' }}">
             <span class="menu-link menu-center">
@@ -85,5 +86,6 @@
                 </div> --}}
             </div>
         </div>
+        @endrole
     </div>
 </div>
