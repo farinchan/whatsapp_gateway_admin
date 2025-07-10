@@ -93,7 +93,7 @@ class MessageController extends Controller
             $response = Http::post(env('WHATSAPP_API_URL')  . "/send-image", [
                 'session' => $request->session, // Use the session name from the request
                 'to' => $request->phone,
-                'urlImage' => Storage::url($imagePath),
+                'urlImage' => asset(Storage::url($imagePath)),
                 // 'urlImage' => "https://upload.wikimedia.org/wikipedia/id/b/b0/Kamen_rider_eurodata.png",
                 'caption' => $request->message
             ]);
