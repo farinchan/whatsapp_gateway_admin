@@ -21,7 +21,7 @@
                     <h4 class="mb-3">API Endpoint</h4>
                     <p class="mb-4">
                         Endpoint ini digunakan untuk mengirim pesan WhatsApp melalui API. Anda perlu menyediakan
-                        <code>session</code> yang valid, nomor <code>phone</code> tujuan, dan isi <code>message</code> yang
+                        <code>session</code> yang valid, nomor <code>to</code> tujuan, dan isi <code>text</code> yang
                         ingin dikirim.
                     </p>
                     <table class="table table-bordered">
@@ -31,7 +31,7 @@
                         </tr>
                         <tr>
                             <th>URL</th>
-                            <td><code>{{ route('api.v1.whatsapp.send-message') }}</code></td>
+                            <td><code>https://api.wa-gateway.torkatatech.com/send-message</code></td>
                         </tr>
                         <tr>
                             <th>Headers</th>
@@ -46,8 +46,8 @@
                             <td>
                                 <pre class="mb-0"><code>{
     "session": "YOUR_SESSION_ID",
-    "phone" : "62xxxxxxxxxxx",
-    "message" : "YOUR_MESSAGE_TEXT"
+    "to" : "62xxxxxxxxxxx",
+    "text" : "YOUR_MESSAGE_TEXT"
  }</code></pre>
                             </td>
                         </tr>
@@ -55,8 +55,12 @@
                             <th>Response</th>
                             <td>
                                 <pre class="mb-0"><code>{
-    "status": "success",
-    "message": "Message sent successfully"
+    "data": {
+        "id": "3EB0xxxxxxxxxxxxxx",
+        "status": 1,
+        "message": "YOUR_MESSAGE_TEXT",
+        "remoteJid": "628xxxxxxxxxxx@s.whatsapp.net"
+    }
  }</code></pre>
                             </td>
                         </tr>
@@ -106,13 +110,13 @@
                             <div class="highlight-code">
                                 <pre class="language-bash" tabindex="0"><code class="language-bash">
 <span class="token bash language-bash"><span class="token comment"># Contoh cURL untuk POST API Send Whatsapp Message</span>
-curl -X POST '{{ route('api.v1.whatsapp.send-message') }}' \
+curl -X POST 'https://api.wa-gateway.torkatatech.com/send-message' \
   -H 'Accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
     "session": "YOUR_SESSION_ID",
-    "phone": "62xxxxxxxxxxx",
-    "message": "YOUR_MESSAGE_TEXT"
+    "to": "62xxxxxxxxxxx",
+    "text": "YOUR_MESSAGE_TEXT"
 }'
 </span>
                                 </code></pre>
@@ -127,11 +131,11 @@ curl -X POST '{{ route('api.v1.whatsapp.send-message') }}' \
                                 <pre class="language-php" tabindex="0"><code class="language-php">
                     <span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
                     <span class="token comment">// Contoh PHP Native untuk POST API Send Whatsapp Message</span>
-                    <span class="token variable">$url</span> = <span class="token string single-quoted-string">'{{ route('api.v1.whatsapp.send-message') }}'</span>;
+                    <span class="token variable">$url</span> = <span class="token string single-quoted-string">'https://api.wa-gateway.torkatatech.com/send-message'</span>;
                     <span class="token variable">$data</span> = [
                         <span class="token string single-quoted-string">'session'</span> =&gt; <span class="token string single-quoted-string">'YOUR_SESSION_ID'</span>,
-                        <span class="token string single-quoted-string">'phone'</span> =&gt; <span class="token string single-quoted-string">'62xxxxxxxxxxx'</span>,
-                        <span class="token string single-quoted-string">'message'</span> =&gt; <span class="token string single-quoted-string">'YOUR_MESSAGE_TEXT'</span>
+                        <span class="token string single-quoted-string">'to'</span> =&gt; <span class="token string single-quoted-string">'62xxxxxxxxxxx'</span>,
+                        <span class="token string single-quoted-string">'text'</span> =&gt; <span class="token string single-quoted-string">'YOUR_MESSAGE_TEXT'</span>
                     ];
                     <span class="token variable">$options</span> = [
                         <span class="token string single-quoted-string">'http'</span> =&gt; [
@@ -156,7 +160,7 @@ curl -X POST '{{ route('api.v1.whatsapp.send-message') }}' \
                             <div class="highlight-code">
                                 <pre class="language-javascript" tabindex="0"><code class="language-javascript">
                     <span class="token javascript language-javascript"><span class="token comment">// Contoh JavaScript untuk POST API Send Whatsapp Message</span>
-                    <span class="token keyword">fetch</span>(<span class="token string single-quoted-string">'{{ route('api.v1.whatsapp.send-message') }}'</span>, {
+                    <span class="token keyword">fetch</span>(<span class="token string single-quoted-string">'https://api.wa-gateway.torkatatech.com/send-message'</span>, {
                         <span class="token property">method</span>: <span class="token string single-quoted-string">'POST'</span>,
                         <span class="token property">headers</span>: {
                             <span class="token string single-quoted-string">'Accept'</span>: <span class="token string single-quoted-string">'application/json'</span>,
@@ -164,8 +168,8 @@ curl -X POST '{{ route('api.v1.whatsapp.send-message') }}' \
                         },
                         <span class="token property">body</span>: <span class="token function">JSON</span>.<span class="token function">stringify</span>({
                             <span class="token string single-quoted-string">'session'</span>: <span class="token string single-quoted-string">'YOUR_SESSION_ID'</span>,
-                            <span class="token string single-quoted-string">'phone'</span>: <span class="token string single-quoted-string">'62xxxxxxxxxxx'</span>,
-                            <span class="token string single-quoted-string">'message'</span>: <span class="token string single-quoted-string">'YOUR_MESSAGE_TEXT'</span>
+                            <span class="token string single-quoted-string">'to'</span>: <span class="token string single-quoted-string">'62xxxxxxxxxxx'</span>,
+                            <span class="token string single-quoted-string">'text'</span>: <span class="token string single-quoted-string">'YOUR_MESSAGE_TEXT'</span>
                         })
                     })
                     .<span class="token function">then</span>(<span class="token keyword">response</span> =&gt; response.<span class="token function">json</span>())
@@ -190,15 +194,15 @@ curl -X POST '{{ route('api.v1.whatsapp.send-message') }}' \
                     <span class="token keyword">import</span> requests
                     <span class="token keyword">import</span> json
 
-                    <span class="token variable">url</span> = <span class="token string single-quoted-string">'{{ route('api.v1.whatsapp.send-message') }}'</span>
+                    <span class="token variable">url</span> = <span class="token string single-quoted-string">'https://api.wa-gateway.torkatatech.com/send-message'</span>
                     <span class="token variable">headers</span> = {
                         <span class="token string single-quoted-string">'Accept'</span>: <span class="token string single-quoted-string">'application/json'</span>,
                         <span class="token string single-quoted-string">'Content-Type'</span>: <span class="token string single-quoted-string">'application/json'</span>
                     }
                     <span class="token variable">payload</span> = {
                         <span class="token string single-quoted-string">'session'</span>: <span class="token string single-quoted-string">'YOUR_SESSION_ID'</span>,
-                        <span class="token string single-quoted-string">'phone'</span>: <span class="token string single-quoted-string">'62xxxxxxxxxxx'</span>,
-                        <span class="token string single-quoted-string">'message'</span>: <span class="token string single-quoted-string">'YOUR_MESSAGE_TEXT'</span>
+                        <span class="token string single-quoted-string">'to'</span>: <span class="token string single-quoted-string">'62xxxxxxxxxxx'</span>,
+                        <span class="token string single-quoted-string">'text'</span>: <span class="token string single-quoted-string">'YOUR_MESSAGE_TEXT'</span>
                     }
 
                     <span class="token variable">response</span> = requests.<span class="token function">post</span>(<span class="token variable">url</span>, headers=<span class="token variable">headers</span>, data=json.dumps(<span class="token variable">payload</span>))
@@ -226,11 +230,11 @@ curl -X POST '{{ route('api.v1.whatsapp.send-message') }}' \
 )
 
 <span class="token keyword">func</span> <span class="token function">main</span>() {
-    url := <span class="token string">"{{ route('api.v1.whatsapp.send-message') }}"</span>
+    url := <span class="token string">"https://api.wa-gateway.torkatatech.com/send-message"</span>
     payload := map[string]string{
         <span class="token string">"session"</span>: <span class="token string">"YOUR_SESSION_ID"</span>,
-        <span class="token string">"phone"</span>:   <span class="token string">"62xxxxxxxxxxx"</span>,
-        <span class="token string">"message"</span>: <span class="token string">"YOUR_MESSAGE_TEXT"</span>,
+        <span class="token string">"to"</span>:   <span class="token string">"62xxxxxxxxxxx"</span>,
+        <span class="token string">"text"</span>: <span class="token string">"YOUR_MESSAGE_TEXT"</span>,
     }
     jsonData, _ := json.Marshal(payload)
 
@@ -266,7 +270,7 @@ curl -X POST '{{ route('api.v1.whatsapp.send-message') }}' \
 
 const char* ssid = "YOUR_WIFI_SSID";
 const char* password = "YOUR_WIFI_PASSWORD";
-const char* serverUrl = "{{ route('api.v1.whatsapp.send-message') }}";
+const char* serverUrl = "https://api.wa-gateway.torkatatech.com/send-message";
 
 void setup() {
   Serial.begin(115200);
@@ -283,7 +287,7 @@ void setup() {
     http.addHeader("Content-Type", "application/json");
     http.addHeader("Accept", "application/json");
 
-    String payload = "{\"session\":\"YOUR_SESSION_ID\",\"phone\":\"62xxxxxxxxxxx\",\"message\":\"YOUR_MESSAGE_TEXT\"}";
+    String payload = "{\"session\":\"YOUR_SESSION_ID\",\"to\":\"62xxxxxxxxxxx\",\"text\":\"YOUR_MESSAGE_TEXT\"}";
     int httpResponseCode = http.POST(payload);
 
     if (httpResponseCode > 0) {

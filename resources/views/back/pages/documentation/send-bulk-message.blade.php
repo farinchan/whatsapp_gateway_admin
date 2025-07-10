@@ -54,6 +54,12 @@
             "to" : "62xxxxxxxxxxx",
             "text" : "YOUR_MESSAGE_TEXT_2"
         },
+        {
+            "to": "6289613390766",
+            "urlDocument": "https://your-url.test/your-document.pdf",
+            "fileName": "your-document.pdf",
+            "caption": "Hei, Check this Document"
+        }
         ...
     ]
  }</code></pre>
@@ -64,7 +70,9 @@
                             <td>
                                 <pre class="mb-0"><code>{
     "status": "success",
-    "message": "Bulk message sent successfully"
+    "data": {
+        "message": "Bulk Message is Processing"
+    }
  }</code></pre>
                             </td>
                         </tr>

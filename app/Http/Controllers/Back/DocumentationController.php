@@ -50,6 +50,28 @@ class DocumentationController extends Controller
 
         return view('back.pages.documentation.send-image', $data);
     }
+
+    public function sendDocument(Request $request)
+    {
+        $data = [
+            'title' => 'Documentation',
+            'breadcrumbs' => [
+                [
+                    'name' => 'Home',
+                    'link' => route('back.home.index')
+                ],
+                [
+                    'name' => 'Documentation',
+                ],
+                [
+                    'name' => 'Send Document',
+                    'link' => route('back.documentation.sendDocument')
+                ],
+            ],
+        ];
+
+        return view('back.pages.documentation.send-document', $data);
+    }
     public function sendBulkMessage(Request $request)
     {
         $data = [

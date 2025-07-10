@@ -2,7 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [\App\Http\Controllers\Front\HomeController::class, 'index'])->name('home.index');
+// Route::get('/', [\App\Http\Controllers\Front\HomeController::class, 'index'])->name('home.index');
+Route::get('/', function () {
+    return redirect()->route('auth.login');
+})->name('home.index');
 
 Route::prefix('blogs')->name('blogs.')->group(function () {
     Route::get('/', [\App\Http\Controllers\Front\BlogController::class, 'index'])->name('index');
@@ -16,7 +19,7 @@ Route::prefix('contact')->name('contact.')->group(function () {
 });
 
 
-Route::name('auth.')->group(function () {
+Route::middleware(['guest'])->name('auth.')->group(function () {
     Route::get('login', [\App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
     Route::post('login', [\App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login.proses');
     Route::get('logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
@@ -33,7 +36,12 @@ Route::name('auth.')->group(function () {
     // Route::get('email/verify', [\App\Http\Controllers\Auth\VerificationController::class, 'show'])->name('verification.notice');
     // Route::get('email/verify/{id}/{hash}', [\App\Http\Controllers\Auth\VerificationController::class, 'verify'])->name('verification.verify');
     // Route::post('email/resend', [\App\Http\Controllers\Auth\VerificationController::class, 'resend'])->name('verification.resend');
+
+    Route::get('google/redirect', [\App\Http\Controllers\Auth\GoogleController::class, 'redirect'])->name('google.redirect');
+    Route::get('google/callback', [\App\Http\Controllers\Auth\GoogleController::class, 'callback'])->name('google.callback');
 });
+
+
 
 
 
@@ -51,6 +59,7 @@ Route::middleware(['auth'])->name('back.')->group(function () {
         })->name('index');
         Route::get('/send-message', [App\Http\Controllers\Back\DocumentationController::class, 'sendMessage'])->name('sendMessage');
         Route::get('/send-image', [App\Http\Controllers\Back\DocumentationController::class, 'sendImage'])->name('sendImage');
+        Route::get('/send-document', [App\Http\Controllers\Back\DocumentationController::class, 'sendDocument'])->name('sendDocument');
         Route::get('/send-bulk-message', [App\Http\Controllers\Back\DocumentationController::class, 'sendBulkMessage'])->name('sendBulkMessage');
     });
 

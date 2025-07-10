@@ -40,15 +40,15 @@
                     </button>
                     <div class="d-flex align-items-center">
                         <div class="text-gray-500 fw-semibold fs-6 me-3 me-md-6" data-kt-translate="general-or">Atau</div>
-                        <a href="#" class="symbol symbol-circle symbol-45px w-45px bg-light me-3">
+                        <a href="{{ route('auth.google.redirect') }}" class="symbol symbol-circle symbol-45px w-45px bg-light me-3">
                             <img alt="Logo" src="{{ asset('back/media/svg/brand-logos/google-icon.svg') }}"
                                 class="p-4" />
                         </a>
-                        <a href="#" class="symbol symbol-circle symbol-45px w-45px bg-light me-3">
+                        <a href="#" class="symbol symbol-circle symbol-45px w-45px bg-light me-3" data-bs-toggle="tooltip" data-bs-placement="top" title="Coming Soon">
                             <img alt="Logo" src="{{ asset('back/media/svg/brand-logos/facebook-3.svg') }}"
                                 class="p-4" />
                         </a>
-                        <a href="#" class="symbol symbol-circle symbol-45px w-45px bg-light">
+                        <a href="#" class="symbol symbol-circle symbol-45px w-45px bg-light" data-bs-toggle="tooltip" data-bs-placement="top" title="Coming Soon">
                             <img alt="Logo" src="{{ asset('back/media/svg/brand-logos/apple-black.svg') }}"
                                 class="theme-light-show p-4" />
                             <img alt="Logo" src="{{ asset('back/media/svg/brand-logos/apple-black-dark.svg') }}"

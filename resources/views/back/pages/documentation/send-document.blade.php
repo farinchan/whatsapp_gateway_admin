@@ -12,7 +12,7 @@
 
                 <div class="card-title">
                     <h2 class="">
-                        Send Image
+                        Send Document
                     </h2>
                 </div>
             </div>
@@ -21,7 +21,7 @@
                     <h4 class="mb-3">API Endpoint</h4>
                     <p class="mb-4">
                         Endpoint ini digunakan untuk mengirim gambar melalui pesan WhatsApp menggunakan API. Anda perlu
-                        menyediakan <code>session</code> yang valid, nomor <code>to</code> tujuan, URL <code>urlImage</code>
+                        menyediakan <code>session</code> yang valid, nomor <code>to</code> tujuan, URL <code>urlDocument</code>
                         yang akan dikirim, dan isi <code>caption</code> opsional.
                     </p>
                     <table class="table table-bordered">
@@ -31,7 +31,7 @@
                         </tr>
                         <tr>
                             <th>URL</th>
-                            <td><code>https://api.wa-gateway.torkatatech.com/send-image</code></td>
+                            <td><code>https://api.wa-gateway.torkatatech.com/send-document</code></td>
                         </tr>
                         <tr>
                             <th>Headers</th>
@@ -47,7 +47,8 @@
                                 <pre class="mb-0"><code>{
     "session": "YOUR_SESSION_ID",
     "to" : "62xxxxxxxxxxx",
-    "urlImage" : "https://your-url.test/your-image.png",
+    "urlDocument" : "https://your-url.test/your-document.pdf",
+    "fileName" : "your-document.pdf",
     "caption" : "YOUR_MESSAGE_TEXT"
  }</code></pre>
                             </td>
@@ -110,14 +111,15 @@
                                 data-bs-original-title="Copy code" data-kt-initialized="1">copy</button>
                             <div class="highlight-code">
                                 <pre class="language-bash" tabindex="0"><code class="language-bash">
-<span class="token bash language-bash"><span class="token comment"># Contoh cURL untuk POST API Send Whatsapp Image</span>
-curl -X POST 'https://api.wa-gateway.torkatatech.com/send-image' \
+<span class="token bash language-bash"><span class="token comment"># Contoh cURL untuk POST API Send Whatsapp document</span>
+curl -X POST 'https://api.wa-gateway.torkatatech.com/send-document' \
   -H 'Accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
     "session": "YOUR_SESSION_ID",
     "to": "62xxxxxxxxxxx",
-    "urlImage": "YOUR_IMAGE_URL",
+    "urlDocument": "YOUR_document_URL",
+    "fileName": "your-document.pdf",
     "caption": "YOUR_MESSAGE_TEXT"
 }'
 </span>
@@ -132,12 +134,13 @@ curl -X POST 'https://api.wa-gateway.torkatatech.com/send-image' \
                             <div class="highlight-code">
                                 <pre class="language-php" tabindex="0"><code class="language-php">
                     <span class="token php language-php"><span class="token delimiter important">&lt;?php</span>
-                    <span class="token comment">// Contoh PHP Native untuk POST API Send Whatsapp Image</span>
-                    <span class="token variable">$url</span> = <span class="token string single-quoted-string">'https://api.wa-gateway.torkatatech.com/send-image'</span>;
+                    <span class="token comment">// Contoh PHP Native untuk POST API Send Whatsapp document</span>
+                    <span class="token variable">$url</span> = <span class="token string single-quoted-string">'https://api.wa-gateway.torkatatech.com/send-document'</span>;
                     <span class="token variable">$data</span> = [
                         <span class="token string single-quoted-string">'session'</span> =&gt; <span class="token string single-quoted-string">'YOUR_SESSION_ID'</span>,
                         <span class="token string single-quoted-string">'to'</span> =&gt; <span class="token string single-quoted-string">'62xxxxxxxxxxx'</span>,
-                        <span class="token string single-quoted-string">'urlImage'</span> =&gt; <span class="token string single-quoted-string">'YOUR_IMAGE_URL'</span>,
+                        <span class="token string single-quoted-string">'urlDocument'</span> =&gt; <span class="token string single-quoted-string">'YOUR_document_URL'</span>,
+                        <span class="token string single-quoted-string">'fileName'</span> =&gt; <span class="token string single-quoted-string">'your-document.pdf'</span>,
                         <span class="token string single-quoted-string">'caption'</span> =&gt; <span class="token string single-quoted-string">'YOUR_MESSAGE_TEXT'</span>
                     ];
                     <span class="token variable">$options</span> = [
@@ -162,8 +165,8 @@ curl -X POST 'https://api.wa-gateway.torkatatech.com/send-image' \
                                 data-bs-original-title="Copy code" data-kt-initialized="1">copy</button>
                             <div class="highlight-code">
                                 <pre class="language-javascript" tabindex="0"><code class="language-javascript">
-                    <span class="token javascript language-javascript"><span class="token comment">// Contoh JavaScript untuk POST API Send Whatsapp Image</span>
-                    <span class="token keyword">fetch</span>(<span class="token string single-quoted-string">'https://api.wa-gateway.torkatatech.com/send-image'</span>, {
+                    <span class="token javascript language-javascript"><span class="token comment">// Contoh JavaScript untuk POST API Send Whatsapp document</span>
+                    <span class="token keyword">fetch</span>(<span class="token string single-quoted-string">'https://api.wa-gateway.torkatatech.com/send-document'</span>, {
                         <span class="token property">method</span>: <span class="token string single-quoted-string">'POST'</span>,
                         <span class="token property">headers</span>: {
                             <span class="token string single-quoted-string">'Accept'</span>: <span class="token string single-quoted-string">'application/json'</span>,
@@ -172,7 +175,8 @@ curl -X POST 'https://api.wa-gateway.torkatatech.com/send-image' \
                         <span class="token property">body</span>: <span class="token function">JSON</span>.<span class="token function">stringify</span>({
                             <span class="token string single-quoted-string">'session'</span>: <span class="token string single-quoted-string">'YOUR_SESSION_ID'</span>,
                             <span class="token string single-quoted-string">'to'</span>: <span class="token string single-quoted-string">'62xxxxxxxxxxx'</span>,
-                            <span class="token string single-quoted-string">'urlImage'</span>: <span class="token string single-quoted-string">'YOUR_IMAGE_URL'</span>,
+                            <span class="token string single-quoted-string">'urlDocument'</span>: <span class="token string single-quoted-string">'YOUR_document_URL'</span>,
+                            <span class="token string single-quoted-string">'fileName'</span>: <span class="token string single-quoted-string">'your-document.pdf'</span>,
                             <span class="token string single-quoted-string">'caption'</span>: <span class="token string single-quoted-string">'YOUR_MESSAGE_TEXT'</span>
                         })
                     })
@@ -194,11 +198,11 @@ curl -X POST 'https://api.wa-gateway.torkatatech.com/send-image' \
                                 data-bs-original-title="Copy code" data-kt-initialized="1">copy</button>
                             <div class="highlight-code">
                                 <pre class="language-python" tabindex="0"><code class="language-python">
-                    <span class="token python language-python"><span class="token comment"># Contoh Python untuk POST API Send Whatsapp Image</span>
+                    <span class="token python language-python"><span class="token comment"># Contoh Python untuk POST API Send Whatsapp document</span>
                     <span class="token keyword">import</span> requests
                     <span class="token keyword">import</span> json
 
-                    <span class="token variable">url</span> = <span class="token string single-quoted-string">'https://api.wa-gateway.torkatatech.com/send-image'</span>
+                    <span class="token variable">url</span> = <span class="token string single-quoted-string">'https://api.wa-gateway.torkatatech.com/send-document'</span>
                     <span class="token variable">headers</span> = {
                         <span class="token string single-quoted-string">'Accept'</span>: <span class="token string single-quoted-string">'application/json'</span>,
                         <span class="token string single-quoted-string">'Content-Type'</span>: <span class="token string single-quoted-string">'application/json'</span>
@@ -206,7 +210,8 @@ curl -X POST 'https://api.wa-gateway.torkatatech.com/send-image' \
                     <span class="token variable">payload</span> = {
                         <span class="token string single-quoted-string">'session'</span>: <span class="token string single-quoted-string">'YOUR_SESSION_ID'</span>,
                         <span class="token string single-quoted-string">'to'</span>: <span class="token string single-quoted-string">'62xxxxxxxxxxx'</span>,
-                        <span class="token string single-quoted-string">'urlImage'</span>: <span class="token string single-quoted-string">'YOUR_IMAGE_URL'</span>,
+                        <span class="token string single-quoted-string">'urlDocument'</span>: <span class="token string single-quoted-string">'YOUR_document_URL'</span>,
+                        <span class="token string single-quoted-string">'fileName'</span>: <span class="token string single-quoted-string">'your-document.pdf'</span>,
                         <span class="token string single-quoted-string">'caption'</span>: <span class="token string single-quoted-string">'YOUR_MESSAGE_TEXT'</span>
                     }
 
@@ -223,7 +228,7 @@ curl -X POST 'https://api.wa-gateway.torkatatech.com/send-image' \
                                 data-bs-original-title="Copy code" data-kt-initialized="1">copy</button>
                             <div class="highlight-code">
                                 <pre class="language-clike" tabindex="0"><code class="language-clike">
-<span class="token go language-clike"><span class="token comment">// Contoh Go untuk POST API Send Whatsapp Image</span>
+<span class="token go language-clike"><span class="token comment">// Contoh Go untuk POST API Send Whatsapp document</span>
 <span class="token keyword">package</span> main
 
 <span class="token keyword">import</span> (
@@ -235,11 +240,12 @@ curl -X POST 'https://api.wa-gateway.torkatatech.com/send-image' \
 )
 
 <span class="token keyword">func</span> <span class="token function">main</span>() {
-    url := <span class="token string">"https://api.wa-gateway.torkatatech.com/send-image"</span>
+    url := <span class="token string">"https://api.wa-gateway.torkatatech.com/send-document"</span>
     payload := map[string]string{
         <span class="token string">"session"</span>: <span class="token string">"YOUR_SESSION_ID"</span>,
         <span class="token string">"to"</span>:   <span class="token string">"62xxxxxxxxxxx"</span>,
-        <span class="token string">"urlImage"</span>:   <span class="token string">"YOUR_IMAGE_URL"</span>,
+        <span class="token string">"urlDocument"</span>:   <span class="token string">"YOUR_document_URL"</span>,
+        <span class="token string">"fileName"</span>: <span class="token string">"your-document.pdf"</span>,
         <span class="token string">"caption"</span>: <span class="token string">"YOUR_MESSAGE_TEXT"</span>,
     }
     jsonData, _ := json.Marshal(payload)
@@ -270,13 +276,13 @@ curl -X POST 'https://api.wa-gateway.torkatatech.com/send-image' \
                                 data-bs-original-title="Copy code" data-kt-initialized="1">copy</button>
                             <div class="highlight-code">
                                 <pre class="language-clike" tabindex="0"><code class="language-clike">
-// Contoh ESP32 (Arduino) untuk POST API Send Whatsapp Image
+// Contoh ESP32 (Arduino) untuk POST API Send Whatsapp document
 #include WiFi.h
 #include HTTPClient.h
 
 const char* ssid = "YOUR_WIFI_SSID";
 const char* password = "YOUR_WIFI_PASSWORD";
-const char* serverUrl = "https://api.wa-gateway.torkatatech.com/send-image";
+const char* serverUrl = "https://api.wa-gateway.torkatatech.com/send-document";
 
 void setup() {
   Serial.begin(115200);
@@ -293,7 +299,7 @@ void setup() {
     http.addHeader("Content-Type", "application/json");
     http.addHeader("Accept", "application/json");
 
-    String payload = "{\"session\":\"YOUR_SESSION_ID\",\"to\":\"62xxxxxxxxxxx\",\"urlImage\":\"YOUR_IMAGE_URL\",\"caption\":\"YOUR_MESSAGE_TEXT\"}";
+    String payload = "{\"session\":\"YOUR_SESSION_ID\",\"to\":\"62xxxxxxxxxxx\",\"urlDocument\":\"YOUR_document_URL\",\"fileName\":\"YOUR_document_URL\",\"caption\":\"YOUR_MESSAGE_TEXT\"}";
     int httpResponseCode = http.POST(payload);
 
     if (httpResponseCode > 0) {
