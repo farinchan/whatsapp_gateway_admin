@@ -2,9 +2,19 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return redirect()->route('back.home.index');
+Route::get('/', [\App\Http\Controllers\Front\HomeController::class, 'index'])->name('home.index');
+
+Route::prefix('blogs')->name('blogs.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\Front\BlogController::class, 'index'])->name('index');
+    Route::get('/{slug}', [\App\Http\Controllers\Front\BlogController::class, 'show'])->name('show');
+    Route::get('/category/{slug}', [\App\Http\Controllers\Front\BlogController::class, 'category'])->name('category');
 });
+
+Route::prefix('contact')->name('contact.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\Front\ContactController::class, 'index'])->name('index');
+    Route::post('/send', [\App\Http\Controllers\Front\ContactController::class, 'send'])->name('send');
+});
+
 
 Route::name('auth.')->group(function () {
     Route::get('login', [\App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
@@ -24,6 +34,8 @@ Route::name('auth.')->group(function () {
     // Route::get('email/verify/{id}/{hash}', [\App\Http\Controllers\Auth\VerificationController::class, 'verify'])->name('verification.verify');
     // Route::post('email/resend', [\App\Http\Controllers\Auth\VerificationController::class, 'resend'])->name('verification.resend');
 });
+
+
 
 Route::middleware(['auth'])->name('back.')->group(function () {
     Route::prefix('home')->name('home.')->group(function () {
