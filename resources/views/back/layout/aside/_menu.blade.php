@@ -12,7 +12,8 @@
                 <span class="menu-title">Home</span>
             </span>
         </a>
-        <a href="{{ route('back.message.index') }}" class="menu-item {{ request()->routeIs('back.message.*') ? 'here show' : '' }} py-2">
+        <a href="{{ route('back.message.index') }}"
+            class="menu-item {{ request()->routeIs('back.message.*') ? 'here show' : '' }} py-2">
             <span class="menu-link menu-center">
                 <span class="menu-icon me-0">
                     <i class="ki-duotone ki-send fs-2x">
@@ -24,7 +25,8 @@
                 <span class="menu-title">Pesan</span>
             </span>
         </a>
-        <a href="{{ route('back.documentation.index') }}" class="menu-item {{ request()->routeIs('back.documentation.*') ? 'here show' : '' }} py-2">
+        <a href="{{ route('back.documentation.index') }}"
+            class="menu-item {{ request()->routeIs('back.documentation.*') ? 'here show' : '' }} py-2">
             <span class="menu-link menu-center">
                 <span class="menu-icon me-0">
                     <i class="ki-duotone ki-document fs-2x">
@@ -35,7 +37,21 @@
                 <span class="menu-title">Dokumentasi</span>
             </span>
         </a>
-        <a href="{{ route('back.home.index') }}" class="menu-item py-2">
+        <a href="#" class="menu-item py-2" data-bs-toggle="tooltip" data-bs-placement="right" title="Coming Soon">
+            <span class="menu-link menu-center">
+                <span class="menu-icon me-0">
+                    <i class="ki-duotone ki-data fs-2x">
+                        <span class="path1"></span>
+                        <span class="path2"></span>
+                        <span class="path3"></span>
+                        <span class="path4"></span>
+                        <span class="path5"></span>
+                    </i>
+                </span>
+                <span class="menu-title">WebHook</span>
+            </span>
+        </a>
+        <a href="#" class="menu-item py-2" data-bs-toggle="tooltip" data-bs-placement="right" title="Coming Soon">
             <span class="menu-link menu-center">
                 <span class="menu-icon me-0">
                     <i class="ki-duotone ki-messages fs-2x">
@@ -50,33 +66,34 @@
             </span>
         </a>
         @role('super-admin')
-        <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start"
-            class="menu-item py-2  {{ request()->routeIs('back.user.*') ? 'here show' : '' }}">
-            <span class="menu-link menu-center">
-                <span class="menu-icon me-0">
-                    <i class="ki-outline ki-briefcase fs-2x"></i>
+            <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="right-start"
+                class="menu-item py-2  {{ request()->routeIs('back.user.*') ? 'here show' : '' }}">
+                <span class="menu-link menu-center">
+                    <span class="menu-icon me-0">
+                        <i class="ki-outline ki-briefcase fs-2x"></i>
+                    </span>
+                    <span class="menu-title">Administator</span>
                 </span>
-                <span class="menu-title">Administator</span>
-            </span>
-            <div class="menu-sub menu-sub-dropdown px-2 py-4 w-200px w-lg-225px mh-75 overflow-auto">
-                <div class="menu-item">
-                    <div class="menu-content "><span class="menu-section fs-5 fw-bolder ps-1 py-1">Administrator</span>
+                <div class="menu-sub menu-sub-dropdown px-2 py-4 w-200px w-lg-225px mh-75 overflow-auto">
+                    <div class="menu-item">
+                        <div class="menu-content "><span class="menu-section fs-5 fw-bolder ps-1 py-1">Administrator</span>
+                        </div>
                     </div>
-                </div>
-                <div class="menu-item">
-                    <a class="menu-link {{ request()->routeIs('back.user.*') ? 'active' : '' }}" href="{{ route('back.user.index') }}">
-                        <span class="menu-icon me-0">
-                            <i class="ki-duotone ki-profile-user">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                <span class="path3"></span>
-                                <span class="path4"></span>
-                            </i>
-                        </span>
-                        <span class="menu-title">Pengguna</span>
-                    </a>
-                </div>
-                {{-- <div class="menu-item">
+                    <div class="menu-item">
+                        <a class="menu-link {{ request()->routeIs('back.user.*') ? 'active' : '' }}"
+                            href="{{ route('back.user.index') }}">
+                            <span class="menu-icon me-0">
+                                <i class="ki-duotone ki-profile-user">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                    <span class="path4"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">Pengguna</span>
+                        </a>
+                    </div>
+                    {{-- <div class="menu-item">
                     <a class="menu-link" href="#">
                         <span class="menu-bullet">
                             <span class="bullet bullet-dot"></span>
@@ -84,8 +101,8 @@
                         <span class="menu-title">User</span>
                     </a>
                 </div> --}}
+                </div>
             </div>
-        </div>
         @endrole
     </div>
 </div>
