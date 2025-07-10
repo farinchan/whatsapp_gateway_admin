@@ -57,9 +57,13 @@ class User extends Authenticatable
      */
     public function getPhotoAttribute()
     {
+        if (isset($this->attributes['photo']) && filter_var($this->attributes['photo'], FILTER_VALIDATE_URL)) {
+            return $this->attributes['photo'];
+        }
+
+
         return isset($this->attributes['photo']) && $this->attributes['photo']
             ? asset('storage/' . $this->attributes['photo'])
             : "https://ui-avatars.com/api/?background=15365F&color=C3A356&size=128&name=" . urlencode($this->name);
     }
 }
-
