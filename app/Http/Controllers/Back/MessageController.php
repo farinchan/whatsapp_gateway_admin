@@ -91,7 +91,7 @@ class MessageController extends Controller
         }
         try {
             $response = Http::post(env('WHATSAPP_API_URL')  . "/send-image", [
-                'session' => env('WHATSAPP_API_SESSION'), // Use the session name from your environment variable
+                'session' => $request->session, // Use the session name from the request
                 'to' => $request->phone,
                 'urlImage' => Storage::url($imagePath),
                 // 'urlImage' => "https://upload.wikimedia.org/wikipedia/id/b/b0/Kamen_rider_eurodata.png",
@@ -174,7 +174,7 @@ class MessageController extends Controller
             }
 
             $response = Http::post(env('WHATSAPP_API_URL')  . "/send-bulk-message", [
-                'session' => env('WHATSAPP_API_SESSION'), // Use the session name from your environment variable
+                'session' => $request->session, // Use the session name from the request
                 'delay' => $request->delay,
                 'data' => $data
             ]);
