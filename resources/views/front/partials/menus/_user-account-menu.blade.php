@@ -12,10 +12,10 @@
             <!--begin::Username-->
             <div class="d-flex flex-column">
                 <div class="fw-bold d-flex align-items-center fs-5">
-                    {{ Auth::guard('ppdb')->user()->name }}
+                    {{ Auth::user()->name }}
                 </div>
                 <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">
-                    {{ Auth::guard('ppdb')->user()->nisn }}
+                    {{ Auth::user()->nisn }}
                 </a>
             </div>
             <!--end::Username-->
@@ -27,7 +27,7 @@
     <!--end::Menu separator-->
     <!--begin::Menu item-->
     <div class="menu-item px-5">
-        <a href="{{ route("ppdb.dashboard") }}" class="menu-link px-5">
+        <a href="{{ route("back.home.index") }}" class="menu-link px-5">
             Dashboard
         </a>
     </div>
@@ -72,7 +72,7 @@
     </div>
 
     <div class="menu-item px-5">
-        <a href="{{ route("ppdb.logout") }}" class="menu-link px-5">
+        <a href="{{ route("auth.logout") }}" class="menu-link px-5">
             Keluar
         </a>
     </div>
